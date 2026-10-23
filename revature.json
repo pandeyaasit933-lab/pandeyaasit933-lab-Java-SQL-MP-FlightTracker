@@ -1,0 +1,75 @@
+{
+  "type": "java",
+  "testFiles": [
+    {
+      "path": "src/test/java/FlightAppTest.java",
+      "testCases": [
+        {
+          "methodName": "flightDAO_GetAllFlightsTest1",
+          "label": "Verify DAO getAllFlights returns all seeded flights",
+          "description": "Calls flightDAO.getAllFlights() and asserts the resultant list contains all six known Flight records (ids with their expected city pairs)."
+        },
+        {
+          "methodName": "flightDAO_GetFlightByIDTest1",
+          "label": "Verify DAO getFlightById finds flight id 6",
+          "description": "Retrieves flight id 6 using flightDAO.getFlightById(6) and verifies it equals Flight(6, 'dallas', 'tampa'), failing the test if the result is null."
+        },
+        {
+          "methodName": "flightDAO_GetFlightByIDTest2",
+          "label": "Verify DAO getFlightById finds flight id 4",
+          "description": "Calls flightDAO.getFlightById(4) and checks that it returns Flight(4, 'morgantown', 'dallas'), failing if the DAO returns null."
+        },
+        {
+          "methodName": "flightDAO_GetFlightsFromCityToCityTest1",
+          "label": "Verify DAO getAllFlightsFromCityToCity using reston and morgantown flights",
+          "description": "Uses flightDAO.getAllFlightsFromCityToCity(\"reston\", \"morgantown\") and verifies the list contains only the reston-to-morgantown flight (id 3) and excludes unrelated flights."
+        },
+        {
+          "methodName": "flightDAO_GetFlightsFromCityToCityTest2",
+          "label": "Verify DAO getAllFlightsFromCityToCity using tampa and dallas flights",
+          "description": "Calls flightDAO.getAllFlightsFromCityToCity(\"tampa\", \"dallas\") and asserts that only the two tampa-to-dallas flights (ids 1 and 5) are included, while other routes are not."
+        },
+        {
+          "methodName": "flightDAO_InsertFlightCheckByIdTest1",
+          "label": "Verify DAO InsertFlight and the inserted flight is retrievable by id",
+          "description": "Inserts a new Flight(\"tampa\", \"morgantown\") via flightDAO.insertFlight(...) and then verifies that flightDAO.getFlightById(7) returns Flight(7, \"tampa\", \"morgantown\")."
+        },
+        {
+          "methodName": "flightDAO_InsertFlightCheckAllFlightsTest1",
+          "label": "Verify DAO InsertFlight and the inserted flight is retrieved with all other flights",
+          "description": "Inserts a new Flight(\"tampa\", \"morgantown\"), then calls flightDAO.getAllFlights() and checks that the returned list contains Flight(7, \"tampa\", \"morgantown\")."
+        },
+        {
+          "methodName": "flightDAO_UpdateFlightDAOTest1",
+          "label": "Verify DAO updateFlight changes route",
+          "description": "Updates flight id 1 using flightDAO.updateFlight(1, new Flight(\"reston\", \"dallas\")) and confirms that getFlightById(1) returns the updated Flight(1, \"reston\", \"dallas\")."
+        },
+        {
+          "methodName": "flightService_GetAllFlightsTest",
+          "label": "Verifies Service getAllFlights method logic",
+          "description": "Mocks mockFlightDAO.getAllFlights() to return a list of four flights and verifies that flightService.getAllFlights() returns exactly the same list."
+        },
+        {
+          "methodName": "flightService_AddFlightTest",
+          "label": "Verifies Service addFlight method logic",
+          "description": "Mocks mockFlightDAO.insertFlight(newFlight) to return a persisted Flight(1, \"dallas\", \"morgantown\"), then asserts flightService.addFlight(newFlight) returns that flight and verifies insertFlight(...) was invoked."
+        },
+        {
+          "methodName": "flightService_GetFlightsFromCityToCityTest1",
+          "label": "Verifies Service getFlightsFromCityToCity method logic",
+          "description": "Mocks DAO responses so that only the tampa-to-dallas flights (801 and 804) are in the city-to-city list, then checks flightService.getAllFlightsFromCityToCity(\"tampa\", \"dallas\") is non-null and contains those two flights."
+        },
+        {
+          "methodName": "flightService_UpdateFlightTest1",
+          "label": "Verifies Service updateFlight method logic",
+          "description": "Sets up mockFlightDAO to know about several flights and to return an expected updated Flight(801, \"dallas\", \"morgantown\"); then verifies flightService.updateFlight(801, f801) returns that expected flight."
+        },
+        {
+          "methodName": "flightService_UpdateFlightTestNonExistent",
+          "label": "Verifies Service updateFlight returns null when flight is missing",
+          "description": "Attempts to update a non-existent flight with id 801 and asserts that flightService.updateFlight(801, f801) returns null, representing a failed update."
+        }
+      ]
+    }
+  ]
+}
